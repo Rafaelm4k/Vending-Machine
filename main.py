@@ -2,9 +2,9 @@ import os
 
 Productos = ["Agua 💧", "Refresco 🥤", "Zumo 🧃"]
 Precios = [0.50, 0.75, 0.95]
-ReservaMonedas = [20, 20, 20, 20, 20]
+ReservaMonedas = [20, 20, 20,20,20,20]
 ValoresMonedas = [2, 1, 0.50, 0.20, 0.10, 0.05]
-
+ 
 def menu(nombres, precios):
     cont = 0
     textomenu = ""
@@ -35,6 +35,12 @@ def MonedasIngresadas(SumaPago, Precios, ReservaMonedas, ValoresMonedas, opcion)
         return "No hay suficiente cambio disponible. Compra cancelada."
     return mensaje + "Pago Completado!. ¡Gracias por tu compra! 🛒"
 
+
+def ActualizarReservaMonedas(Pago, ReservaMonedas, ValoresMonedas):
+    for i in range(len(ValoresMonedas)):
+        if round(Pago, 2) == round(ValoresMonedas[i], 2):
+            ReservaMonedas[i] += 1
+
 opcion = 0
 while opcion != 4:
     continuar = True
@@ -49,9 +55,11 @@ while opcion != 4:
         SumaPago = 0
         while continuar:
             print(MonedasIngresadas(SumaPago, Precios, ReservaMonedas, ValoresMonedas, opcion))
-            Pago = float(input(f"Ingresa monedas para completar el pago. 💵 : ").replace(",", "."))
+            Pago = float(input(f"Ingresa monedas para completar el pago. 💵 : "))
+            ActualizarReservaMonedas(Pago, ReservaMonedas, ValoresMonedas)
             SumaPago += Pago
             if SumaPago >= Precios[opcion - 1]:
                 continuar = False
         os.system("cls")
         print(MonedasIngresadas(SumaPago, Precios, ReservaMonedas, ValoresMonedas, opcion))
+        print(ReservaMonedas)
